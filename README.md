@@ -1,36 +1,35 @@
-[![Build Status](https://travis-ci.org/lpil/sonic-pi-tool.svg?branch=master)](https://travis-ci.org/lpil/sonic-pi-tool)
-
-Sonic Pi Tool
+Sonic Pi Tool (Python)
 =============
 
-`sonic-pi-tool` is a handy command line utility for playing with the Sonic Pi
+`sonic-pi-tool.py` is a port of [sonic-pi-tool](https://github.com/lpil/sonic-pi-tool) to Python.
+It is a handy command line utility for playing with the Sonic Pi
 server. It can be used instead of the Sonic Pi GUI for all your music making
 needs :)
 
-It's ideal for use with [sonicpi.vim][sonicpi.vim].
-
-[sonicpi.vim]: https://github.com/dermusikman/sonicpi.vim
+It's ideal for use with [sonicpi.vim](https://github.com/dermusikman/sonicpi.vim)
 
 
 ## Installation
 
-If you have the [Rust programming language][rust-install] installed Sonic Pi
-Tool can be installed like so:
+Sonic Pi Tool doesn't currently have a proper installer.
+However it is just a simple Python script with a couple of dependencies,
+so it's not hard to install manually:
 
 ```sh
-cargo install --git https://github.com/lpil/sonic-pi-tool/
+# Install dependencies:
+pip3 install python-osc click
+
+# Download script:
+curl -O https://raw.githubusercontent.com/emlyn/sonic-pi-tool/master/sonic-pi-tool.py
+
+# Make it executable:
+chmod +x sonic-pi-tool.py
+
+# Copy it somewhere on the PATH:
+sudo cp sonic-pi-tool.py /usr/local/bin/
 ```
 
-To upgrade to a newer version use the `--force` flag.
-
-```sh
-cargo install --git https://github.com/lpil/sonic-pi-tool/ --force
-```
-
-[rust-install]: https://www.rust-lang.org/en-US/install.html
-
-`sonic-pi-tool` may not build on older versions of Rust. Please see [the CI
-configuration](././travis.yml) for which versions are explicitly supported.
+`sonic-pi-tool.py` does not currently support Python 2.
 
 
 ## Usage
@@ -47,7 +46,7 @@ configuration](././travis.yml) for which versions are explicitly supported.
 ### `check`
 
 ```sh
-sonic-pi-tool check
+sonic-pi-tool.py check
 # => Sonic Pi server listening on port 4557
 ```
 
@@ -60,7 +59,7 @@ This command returns a non-zero exit code if the server is not running.
 ### `eval`
 
 ```sh
-sonic-pi-tool eval "play :C4"
+sonic-pi-tool.py eval "play :C4"
 # *ding*
 ```
 
@@ -71,7 +70,7 @@ played.
 ### `eval-file`
 
 ```sh
-sonic-pi-tool eval-file path/to/code.rb
+sonic-pi-tool.py eval-file path/to/code.rb
 # *music*
 ```
 
@@ -82,7 +81,7 @@ played.
 ### `eval-stdin`
 
 ```sh
-echo "play :C4" | sonic-pi-tool eval-stdin
+echo "play :C4" | sonic-pi-tool.py eval-stdin
 # *ding*
 ```
 
@@ -95,7 +94,7 @@ played.
 Stop all jobs running on the Sonic Pi server, stopping the music.
 
 ```sh
-sonic-pi-tool stop
+sonic-pi-tool.py stop
 # *silence*
 ```
 
@@ -108,7 +107,7 @@ This command won't succeed if the Sonic Pi GUI is running as it will be
 consuming the logs already.
 
 ```sh
-sonic-pi-tool logs
+sonic-pi-tool.py logs
 #
 # [Run 2, Time 32.7]
 #  └ synth :beep, {note: 65.0, release: 0.1, amp: 0.9741}
@@ -125,7 +124,7 @@ Attempts start the Sonic Pi server, if the executable can be found.
 Not supported on Windows.
 
 ```sh
-sonic-pi-tool start-server
+sonic-pi-tool.py start-server
 # Sonic Pi server booting...
 # Using protocol: udp
 # Detecting port numbers...
@@ -138,23 +137,9 @@ Record the audio output of a Sonic Pi session to a local file.
 Stop and save the recording when the Enter key is pressed.
 
 ```sh
-sonic-pi-tool record /tmp/output.wav
+sonic-pi-tool.py record /tmp/output.wav
 # Recording started, saving to /tmp/output.wav.
 # Press Enter to stop the recording...
 ```
-
-## Other tools
-
-In addition to `sonic-pi-tool` this project contains `sonic-pi-pipe` and
-`sonic-pi-logs`. These two programs came first and are written in Go rather
-than Rust.
-
-Everything they can do can be done with the newer `sonic-pi-tool`, and as a
-result they are no longer actively maintained. :)
-
-Read more about these tools [here][old].
-
-[old]: https://github.com/lpil/sonic-pi-tool/tree/master/old
-
 
 ## MPL 2.0 Licence
